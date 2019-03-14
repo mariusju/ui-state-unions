@@ -1,0 +1,16 @@
+{
+  "env": {
+    "jest": true
+  },
+  "plugins": ["react", "prettier", "jest"],
+  "extends": ["prettier", "plugin:react/recommended"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/valid-expect": "error"
+  }
+}
