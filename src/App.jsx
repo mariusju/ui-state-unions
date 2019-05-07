@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ActionBar from './ActionBar'
+import UI from './UI'
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
       <div>
         <ActionBar />
         <h3>{this.props.panelState.toString()}</h3>
+        <UI panelState={this.props.panelState} />
       </div>
     )
   }
