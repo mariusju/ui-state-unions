@@ -1,14 +1,25 @@
+// @ts-nocheck
 import { union, derivations } from 'folktale/adt/union'
 
 const PanelState = union('PanelState', {
-  Home: () => ({}),
-  SearchingForPlayer: () => ({}),
-  NoPlayer: () => ({}),
-  QueryingMatches: () => ({}),
+  Home: ({ name }) => ({ name }),
+  SearchingForPlayer: ({ name }) => ({ name }),
+  NoPlayer: ({ name }) => ({ name }),
+  QueryingMatches: ({ name, id }) => ({ name, id }),
   ErrorMessage: () => ({}),
-  MatchList: () => ({}),
-  LoadingMatch: () => ({}),
-  PlayingMatch: () => ({}),
+  MatchList: ({ name, id, matches }) => ({ name, id, matches }),
+  LoadingMatch: ({ name, id, matches, match }) => ({
+    name,
+    id,
+    matches,
+    match,
+  }),
+  PlayingMatch: ({ name, id, matches, match }) => ({
+    name,
+    id,
+    matches,
+    match,
+  }),
 }).derive(derivations.debugRepresentation)
 
 export default PanelState

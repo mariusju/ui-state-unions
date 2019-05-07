@@ -25,28 +25,28 @@ const {
   PlayingMatch,
 } = PanelState
 
-const initialState = Home()
+const initialState = Home({ name: '' })
 
 export default (state = initialState, action) => {
   return state.matchWith({
-    Home: () => {
+    Home: ({ name }) => {
       switch (action.type) {
         case PLAYER_ENTERED:
-          return Home()
+          return Home({ name: action.name })
         case PLAYER_SELECTED:
-          return SearchingForPlayer()
+          return SearchingForPlayer({ name })
         default:
           return state
       }
     },
-    SearchingForPlayer: () => {
+    SearchingForPlayer: ({ name }) => {
       switch (action.type) {
         case ERROR_OCCURRED:
           return ErrorMessage()
         case PLAYER_FOUND:
-          return QueryingMatches()
+          return QueryingMatches({ name, id: action.id })
         case NO_PLAYER_FOUND:
-          return NoPlayer()
+          return NoPlayer({ name })
         default:
           return state
       }
@@ -54,47 +54,47 @@ export default (state = initialState, action) => {
     NoPlayer: () => {
       switch (action.type) {
         case START_OVER:
-          return Home()
+          return Home({ name: '' })
         default:
           return state
       }
     },
-    QueryingMatches: () => {
+    QueryingMatches: ({ name, id }) => {
       switch (action.type) {
         case ERROR_OCCURRED:
           return ErrorMessage()
         case MATCHES_FOUND:
-          return MatchList()
+          return MatchList({ name, id, matches: action.matches })
         default:
           return state
       }
     },
-    MatchList: () => {
+    MatchList: ({ name, id, matches }) => {
       switch (action.type) {
         case MATCH_SELECTED:
-          return LoadingMatch()
+          return LoadingMatch({ name, id, matches, match: action.match })
         case START_OVER:
-          return Home()
+          return Home({ name: '' })
         default:
           return state
       }
     },
-    LoadingMatch: () => {
+    LoadingMatch: ({ name, id, matches, match }) => {
       switch (action.type) {
         case ERROR_OCCURRED:
           return ErrorMessage()
         case MATCH_LOADED:
-          return PlayingMatch()
+          return PlayingMatch({ name, id, matches, match })
         default:
           return state
       }
     },
-    PlayingMatch: () => {
+    PlayingMatch: ({ name, id, matches }) => {
       switch (action.type) {
         case START_OVER:
-          return Home()
+          return Home({ name: '' })
         case PLAYER_MATCHES_CLICKED:
-          return MatchList()
+          return MatchList({ name, id, matches })
         default:
           return state
       }
@@ -102,7 +102,7 @@ export default (state = initialState, action) => {
     ErrorMessage: () => {
       switch (action.type) {
         case START_OVER:
-          return Home()
+          return Home({ name: '' })
         default:
           return state
       }
